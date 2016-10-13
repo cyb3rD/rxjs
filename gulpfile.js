@@ -15,6 +15,6 @@ gulp.task("scripts:server", () => {
 gulp.task("watch:server:scripts", gulp.series(
   "scripts:server",
   () => {
-    return gulp.watch("./src-server/**.*.js", gulp.series("scripts:server"));
+    return gulp.watch("./src-server/**/*.js", gulp.series("scripts:server"));
   }
 ));
