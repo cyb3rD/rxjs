@@ -5,13 +5,16 @@ const $title = $("#title");
 const $results = $("#results");
 
 const keyUps$ = Rx.Observable.fromEvent($title, "keyup"); //Stream of events
+const queries$ = keyUps$
+  .map(e => e.target.value) // Stream of text
+  .disctinctUntilChanged(); // Produce value if value has changed from previous
 
-keyUps$.subscribe(e => {
-  getItems(e.target.value)
+queries$.subscribe(query => {
+  getItems(query)
     .then(items => {
       $results.empty();
       $results.append(items.map(res => $("<li />").text(res)));
-  });
+    });
 });
 
 /**
