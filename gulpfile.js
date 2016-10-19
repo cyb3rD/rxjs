@@ -39,7 +39,7 @@ gulp.task("watch:client:scripts", () => {
 
 gulp.task("watch:scripts",
   gulp.parallel(
-    "watch:seerver:scripts",
+    "watch:server:scripts",
     "watch:client:scripts"
   )
 );
