@@ -7,7 +7,9 @@ const $results = $("#results");
 const keyUps$ = Rx.Observable.fromEvent($title, "keyup"); //Stream of events
 const queries$ = keyUps$
   .map(e => e.target.value) // Stream of text
-  .disctinctUntilChanged(); // Produce value if value has changed from previous
+  .disctinctUntilChanged()  // Produce value if value has changed from previous
+  .debounceTime(250)       // Delay with 500ms
+  .switchMap(query => getItems(query)); //Provides result from the 1st query that complete
 
 queries$.subscribe(query => {
   getItems(query)
