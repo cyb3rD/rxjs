@@ -5,6 +5,7 @@ const $results = $("#results");
 
 let lastQuery = null;
 let lastTimeout = null;
+let nextQueryId = 0;
 
 $title.on("keyup", e => {
   const title = e.target.value;
@@ -20,10 +21,16 @@ $title.on("keyup", e => {
     window.clearTimeout(lastTimeout);
   }
 
+  let ourQueryId = ++nextQueryId;
+  
   // perform query after 500ms after last keyup  
   lastTimeout = window.setTimeout(() => {
-    getItems(title)
-    .then(items => {
+    getItems(title).then(items => {
+      
+      if (ourQueryId != nextQueryId) {
+        return;
+      }
+      
       $results.empty();
 
       const $items = items.map(item => $("<li />").text(item));
